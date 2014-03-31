@@ -47,8 +47,8 @@ void PRINT_LCS(T &X, int i, int j) {
 
 int main()
 {
-    string X{"ALLAAQANKESSSESFISRLLAIVAD"};
-    string Y{"KLQKKLAETEKRCTLLAAQANKENSNESFISRLLAIVAG"};
+    string X{"0ALLAAQANKESSSESFISRLLAIVAD"};
+    string Y{"0KLQKKLAETEKRCTLLAAQANKENSNESFISRLLAIVAG"};
     LCS_LENGTH(X, Y);
     PRINT_LCS(X, X.size(), Y.size());
     return 0;
