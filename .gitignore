@@ -213,3 +213,10 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+#code blocks version
+*.exe
+*.o
+*.cbp
+*.depend
+*.layout
