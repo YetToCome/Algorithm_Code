@@ -1,0 +1,71 @@
+int PythonFastSearch(wchar_t* strRowString, int nRowLength, wchar_t* strPattern, int nPatternLength)
+{    
+	long lMask = 0;  
+	int nSkip = 0, mlast = 0, nSpecialCase = 0;
+	int i = 0, j = 0;
+
+	nSpecialCase = nRowLength - nPatternLength;  
+	if (nSpecialCase < 0)
+	{
+		return -1;
+	}
+	if (nPatternLength <= 1)
+	{        
+		if (nPatternLength <= 0)
+		{
+			return -1;        
+		}
+		for (i = 0; i < nRowLength; i++)
+		{
+			if (strRowString[i] == strPattern[0])
+			{
+				return i;
+			}
+			return -1;
+		}
+	}    
+	mlast = nPatternLength - 1;    
+	nSkip = mlast - 1;
+	for (lMask = i = 0; i < mlast; i++) 
+	{        
+		lMask |= (1 << (strPattern[i] & 0x1F));        
+		if (strPattern[i] == strPattern[mlast])
+		{
+			nSkip = mlast - i - 1;
+		}
+	}      
+	lMask |= (1 << (strPattern[mlast] & 0x1F));
+	for (i = 0; i <= nSpecialCase; i++) 
+	{  
+		if (strRowString[i+nPatternLength-1] == strPattern[nPatternLength-1]) 
+		{           
+			for (j = 0; j < mlast; j++)
+			{
+				if (strRowString[i+j] != strPattern[j])
+				{
+					break;
+				}
+			}
+			if (j == mlast) 
+			{
+				return i;            
+			}
+			if (!(lMask & (1 << (strRowString[i+nPatternLength] & 0x1F)))) 
+			{
+				i = i + nPatternLength;
+			}
+			else
+			{
+				i = i + nSkip;
+			}
+		}
+		else 
+		{
+			if (!(lMask & (1 << (strRowString[i+nPatternLength] & 0x1F))))
+			{
+				i = i + nPatternLength;
+			}
+		}
+	}
+	return -1;
+}
